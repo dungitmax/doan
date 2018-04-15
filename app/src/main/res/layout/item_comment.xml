@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        android:orientation="horizontal">
+    <ImageView
+        android:paddingTop="7dp"
+        android:layout_marginLeft="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_user"/>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_cmt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Tên hiển thị"
+                android:textColor="#3b6bcc"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_cmt_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Nội dung"
+            android:textColor="#414345"
+            android:textSize="14dp"
+            />
+        </LinearLayout>
+    </LinearLayout>

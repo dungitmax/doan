@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MonNgonDuongPho</string>
+    <string name="title_home">Home</string>
+    <string name="title_favorite">Yêu thích</string>
+    <string name="title_account">Tài khoản</string>
+    <string name="title_news">Bảng tin</string>
+    <string name="title_map">Bản đồ</string>
+    <string name="map_api_key">AIzaSyAV061lpdtJJSfhw1XhiP3L9RVEMUnZXnQ</string>
+    <string name="facebook_app_id">155052151851180</string>
+    <string name="fb_login_protocol_scheme">fb155052151851180</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_thongtinlienhe">Map</string>
+    <string name="pick_image_intent_text">Maaaa</string>
+</resources>

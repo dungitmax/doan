@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorGray">#ab9595</color>
+    <color name="colorGoogle">#dc1010</color>
+    <color name="tab_background_selected">#17be0e</color>
+    <color name="white">#ffff</color>
+    <color name="blue">#0419d6</color>
+    <color name="colorBlackNhat">#66000000</color>
+    <color name="colorOriange">#F67122</color>
+    <color name="colorBlack">#000</color>
+
+</resources>

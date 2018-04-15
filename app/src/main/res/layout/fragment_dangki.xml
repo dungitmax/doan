@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.example.tandung_pc.monngonduongpho.View.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_edtHoten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.ClearEditText
+                android:id="@+id/edtHoten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Họ tên" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.ClearEditText
+                android:id="@+id/edtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email/Số điện thoại" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_edtMK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Mật khẩu">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.PassWordCustom
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:useSkike="true"
+                app:useValidate="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_edtNewMK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Nhập lại mật khẩu">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.PassWordCustom
+                android:id="@+id/edtPasswordNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:useSkike="true"
+                app:useValidate="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_edtAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.ClearEditText
+                android:id="@+id/edtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Địa chỉ" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnDangKi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ec0909"
+            android:text="đăng kí"
+            android:textColor="#ffff"
+            android:textSize="20sp" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

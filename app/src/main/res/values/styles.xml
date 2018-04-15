@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="ThemeWithCorners" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@drawable/custom_dialog</item>
+    </style>
+    <style name="TextLabel" >
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/colorBlackNhat</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorOriange</item>
+    </style>
+    <style name="textColor" >
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/colorBlackNhat</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorOriange</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <declare-styleable name="PassWordCustom">
+        <attr name="useSkike" format="boolean"></attr>
+        <attr name="useValidate" format="boolean"></attr>
+    </declare-styleable>
+</resources>

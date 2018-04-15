@@ -1,0 +1,75 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutTaiKhoan"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.example.tandung_pc.monngonduongpho.View.Thongtintaikhoan">
+
+    <TableRow
+        android:id="@+id/tableRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cell_shape"
+        android:gravity="center_horizontal"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/tv31"
+            android:layout_weight="1"
+            android:padding="20dip"
+            android:text="Tên người dùng:"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/txtTen"
+            android:layout_weight="3"
+            android:padding="20dip"
+            android:textColor="#000000" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cell_shape"
+        android:gravity="center_horizontal"
+        android:weightSum="4">
+
+        <TextView
+            android:layout_weight="1"
+            android:padding="20dip"
+            android:text="Số điện thoại/Email:"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/txtUsername"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:padding="20dip"
+            android:textColor="#000000" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cell_shape"
+        android:gravity="center_horizontal"
+        android:weightSum="4">
+
+        <TextView
+            android:layout_weight="1"
+            android:padding="20dip"
+            android:text="Địa chỉ:"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/txtDiachi"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:padding="20dip"
+            android:textColor="#000000" />
+    </TableRow>
+
+</TableLayout>
