@@ -1,6 +1,5 @@
 package com.example.tandung_pc.monngonduongpho.View;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tandung_pc.monngonduongpho.Adapter.CommentAdapter;
@@ -51,11 +51,12 @@ public class Detail_Screen_Food extends AppCompatActivity {
     String Motachitiet = "";
     int IdTypeFood = 0;
     int maFood;
+    String id = "";
+    String name = "";
+    String username = "";
     ArrayList<ModelComment> arrayComment;
     CommentAdapter commentAdapter;
     EditText edtNoidung;
-    boolean limitdata = false;
-    View footerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,8 @@ public class Detail_Screen_Food extends AppCompatActivity {
                 String noidung = edtNoidung.getText().toString();
                 if (noidung.equals("")) {
                     Toast.makeText(getApplicationContext(), "Bạn chưa nhập nội dung đánh giá !", Toast.LENGTH_SHORT).show();
+                } else if (MainActivity.getten.equals("")) {
+                    Toast.makeText(Detail_Screen_Food.this, "Vui lòng đăng nhập !", Toast.LENGTH_SHORT).show();
                 } else {
                     Response.Listener<String> listener = new Response.Listener<String>() {
                         @Override
@@ -88,15 +91,24 @@ public class Detail_Screen_Food extends AppCompatActivity {
                             commentAdapter = new CommentAdapter(arrayComment, getApplicationContext());
                             lvComment.setAdapter(commentAdapter);
                             Getdata();
+                            GetUser();
                         }
                     };
-                    SharedPreferences preferences = getSharedPreferences("getuserid", MODE_PRIVATE);
-                    // String name = preferences.getString("name", "");
-                    String id_user = preferences.getString("user_id", "");
+//                    SharedPreferences preferences = getSharedPreferences("getuserid", MODE_PRIVATE);
+//                    SharedPreferences preferences1 = getSharedPreferences("dangnhap", MODE_PRIVATE);
+//                    String name = preferences1.getString("username", "");
+//                    String id_user = preferences.getString("user_id", "");
+//                    Log.d("eee", id_user);
+                    if (MainActivity.getten.equals("ltandungit@gmail.com")) {
+                        CommentRequest request = new CommentRequest(id, String.valueOf(maFood), "Lê Tấn Dũng", noidung, listener);
+                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                        queue.add(request);
+                    } else {
+                        CommentRequest request = new CommentRequest(id, String.valueOf(maFood), MainActivity.getten, noidung, listener);
+                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                        queue.add(request);
+                    }
 
-                    CommentRequest request = new CommentRequest(id_user, String.valueOf(maFood), "Lê Tấn Dũng", noidung, listener);
-                    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                    queue.add(request);
 //                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 //                    String duongdan = Server.DuongdanSendComment;
 //                    StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {
@@ -123,6 +135,36 @@ public class Detail_Screen_Food extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    private void GetUser() {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Server.DuongdanGetUser, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        id = jsonObject.getString("user_id");
+                        String username = jsonObject.getString("username");
+                        name = jsonObject.getString("name_User");
+                        String diachi = jsonObject.getString("address");
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+        });
+        requestQueue.add(jsonArrayRequest);
 
     }
 

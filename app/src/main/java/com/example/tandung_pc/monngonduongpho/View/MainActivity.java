@@ -23,9 +23,6 @@ import android.widget.Toast;
 
 import com.example.tandung_pc.monngonduongpho.R;
 import com.example.tandung_pc.monngonduongpho.until.CheckConnection;
-import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     transaction.replace(R.id.content, new HomeFragment()).commit();
                     toolbar.setTitle("Home");
                     return true;
-                case R.id.navigation_news:
-                    transaction.replace(R.id.content, new FragmentNews()).commit();
-                    toolbar.setTitle("Bảng tin");
-                    return true;
+//                case R.id.navigation_news:
+//                    transaction.replace(R.id.content, new FragmentNews()).commit();
+//                    toolbar.setTitle("Bảng tin");
+//                    return true;
                 case R.id.navigation_favorite:
                     transaction.replace(R.id.content, new FavoriteFragment()).commit();
                     toolbar.setTitle("Yêu thích");
@@ -139,10 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     SharedPreferences settings = getSharedPreferences("dangnhap", MODE_PRIVATE);
                     settings.edit().clear().commit();
                     txtExit.setText("");
-                    FacebookSdk.sdkInitialize(getApplicationContext());
-                    if (AccessToken.getCurrentAccessToken() != null) {
-                        LoginManager.getInstance().logOut();
-                    }
+                    mImageView.setImageDrawable(getResources().getDrawable(R.drawable.icontaikhoan));
                     startActivity(intent);
                 }
             });
@@ -195,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 Intent intent = new Intent(MainActivity.this, Activity_Add_Next.class);
                 startActivity(intent);
+                finish();
             }
 
         }

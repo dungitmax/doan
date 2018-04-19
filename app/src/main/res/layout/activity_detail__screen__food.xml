@@ -24,7 +24,7 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="350dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,6 +105,12 @@
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bình luận :"
+            android:textStyle="bold" />
+
         <ListView
             android:id="@+id/lvComment"
             android:layout_width="match_parent"
@@ -121,7 +127,8 @@
             android:id="@+id/edt_noidung1"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:hint="Viết bình luận" />
 
         <ImageView
             android:id="@+id/btn_sendcoment"

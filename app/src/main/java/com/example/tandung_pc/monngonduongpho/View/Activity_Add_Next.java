@@ -42,7 +42,6 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
     Spinner spinner;
     ProgressDialog progressDialog;
     String user_id = "";
-    SharedPreferences preferences;
     //Image request code
     private int PICK_IMAGE_REQUEST = 1;
     //Bitmap to get image from gallery
@@ -96,7 +95,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         String name = edtNameFood.getText().toString();
         String address = edtAddress.getText().toString();
         String price = edtPrice.getText().toString();
-        String information = edtInformation.getText().toString().trim();
+        String information = edtInformation.getText().toString();
         String temp = spinner.getSelectedItem().toString();
 
         String idFoodtype = "";
@@ -119,6 +118,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();
+        progressDialog.dismiss();
 
 
         if (name.equals("") || address.equals("") || price.equals("") || temp.equals("")
@@ -247,6 +247,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.btnThem:
                 uploadMultipart();
+                finish();
                 break;
             case R.id.btnThoat:
                 finish();

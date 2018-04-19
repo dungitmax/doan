@@ -19,7 +19,7 @@ public class CommentRequest extends StringRequest {
         super(Method.POST, url, listener, null);
         params = new HashMap<>();
         params.put("user_id", String.valueOf(user_id));
-        params.put("food_id", String.valueOf(user_id));
+        params.put("food_id", String.valueOf(food_id));
         params.put("username", username);
         params.put("text_comment", text_comment);
     }

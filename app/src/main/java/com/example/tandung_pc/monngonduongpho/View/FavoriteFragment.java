@@ -81,13 +81,13 @@ public class FavoriteFragment extends Fragment {
 
     private void ThongBao() {
         if (list.size() <= 0) {
-            adapter.notifyDataSetChanged();
             txtThongBao.setVisibility(View.VISIBLE);
             lvYeuThich.setVisibility(View.INVISIBLE);
-        } else {
             adapter.notifyDataSetChanged();
+        } else {
             txtThongBao.setVisibility(View.INVISIBLE);
             lvYeuThich.setVisibility(View.VISIBLE);
+            adapter.notifyDataSetChanged();
         }
 
 

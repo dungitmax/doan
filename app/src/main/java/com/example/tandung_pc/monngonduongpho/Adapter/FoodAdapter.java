@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.tandung_pc.monngonduongpho.Model.Food;
 import com.example.tandung_pc.monngonduongpho.R;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.Normalizer;
@@ -74,8 +73,12 @@ public class FoodAdapter extends BaseAdapter {
         }
         Food food = listFood.get(position);
         viewHolder.txtNameFood.setText(food.getNameFood());
-        Picasso.with(context).load(food.getImage()).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.noimage)
-                .error(R.drawable.error).into(viewHolder.imgFood);
+        //
+//        Glide.with(context).load(food.getImage())
+//                .into(viewHolder.imgFood);
+//        Log.d("image", food.getImage());
+        Picasso.with(context).load(food.getImage()).into(viewHolder.imgFood);
+        //
         viewHolder.txtAdress.setMaxLines(2);
         viewHolder.txtAdress.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.txtAdress.setText(food.getAddress());

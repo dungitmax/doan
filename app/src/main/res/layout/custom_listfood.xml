@@ -26,14 +26,15 @@
             android:layout_height="wrap_content"
             android:text="name food"
             android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:textColor="#100f0f"
             android:id="@+id/txtAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="adress"
+            android:textColor="#100f0f"
             android:textStyle="bold" />
 
     </LinearLayout>

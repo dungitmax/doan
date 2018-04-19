@@ -1,6 +1,5 @@
 package com.example.tandung_pc.monngonduongpho.View;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -47,18 +46,12 @@ public class FragmentThongTinTaiKhoan extends android.support.v4.app.Fragment {
                         String username = jsonObject.getString("username");
                         String name = jsonObject.getString("name_User");
                         String diachi = jsonObject.getString("address");
-                        //
-                        SharedPreferences preferences = getActivity().getSharedPreferences("getuserid", getContext().MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("user_id", id);
-                        editor.putString("name", name);
-                        editor.commit();
                         if (MainActivity.getten.equals(username)) {
                             txtTen.setText(name);
                             txtUsername.setText(username);
                             txtDiachi.setText(diachi);
                         }
-                        if (MainActivity.getGmail.equals("ltandungit@gmail.com")){
+                        if (MainActivity.getGmail.equals("ltandungit@gmail.com")) {
                             txtTen.setText("Lê Tấn Dũng");
                             txtUsername.setText("ltandungit@gmail.com");
                             txtDiachi.setText("Nam Phú-Tiền Hải-Thái Bình");
