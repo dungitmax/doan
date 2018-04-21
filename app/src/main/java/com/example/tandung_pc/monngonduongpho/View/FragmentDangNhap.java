@@ -16,11 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tandung_pc.monngonduongpho.Model.LoginRequest;
 import com.example.tandung_pc.monngonduongpho.Model.User;
@@ -35,7 +32,6 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,8 +63,9 @@ public class FragmentDangNhap extends Fragment implements NavigationView.OnNavig
                 result();
                 Log.d("kiemtra", "thanhcong");
                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-
+                getActivity().finish();
                 Toast.makeText(getActivity(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                 try {
                     FragmentDangNhap.this.finalize();
@@ -113,6 +110,8 @@ public class FragmentDangNhap extends Fragment implements NavigationView.OnNavig
                                     //dang nhap thanh cong!
                                     Toast.makeText(getActivity(), "Đăng nhập thành công !", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getActivity(), MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
 //                                    intent.putExtra("dangnhap", "dangnhap");
 //                                    intent.putExtra("image", R.drawable.helloo);
 
@@ -123,7 +122,7 @@ public class FragmentDangNhap extends Fragment implements NavigationView.OnNavig
                                     editor.putString("exit", "Đăng xuất");
                                     editor.commit();
                                     startActivity(intent);
-
+                                    getActivity().finish();
 //                                    NavigationView nav = (NavigationView) view.findViewById(R.id.navigationViewManHinhChinh);
 //                                    if (nav != null) {
 //                                        LinearLayout mParent = (LinearLayout) nav.getHeaderView(0);

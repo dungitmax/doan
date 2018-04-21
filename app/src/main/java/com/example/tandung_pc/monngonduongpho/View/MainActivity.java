@@ -28,10 +28,10 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static NavigationView navigationView;
     public static String getten, getGmail;
+    public static TextView txtName, txtExit, txtEmail;
     NavigationView navigationViewManHinhChinh;
     Toolbar toolbar;
     DrawerLayout drawerLayoutManHinhChinh;
-    TextView txtName, txtExit, txtEmail;
     boolean doubleBackToExitPressedOnce = false;
     String url_image;
     ImageView mImageView;

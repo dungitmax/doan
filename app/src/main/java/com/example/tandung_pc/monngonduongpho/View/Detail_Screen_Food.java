@@ -71,6 +71,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
         Getdata();
     }
 
+
     private void sendComment() {
         findViewById(R.id.btn_sendcoment).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +86,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
 
-                            Toast.makeText(getApplicationContext(), "Comment success !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Bình luận thành công !", Toast.LENGTH_SHORT).show();
                             edtNoidung.setText("");
                             arrayComment = new ArrayList<>();
                             commentAdapter = new CommentAdapter(arrayComment, getApplicationContext());
@@ -235,7 +236,6 @@ public class Detail_Screen_Food extends AppCompatActivity {
         txtMotafood = findViewById(R.id.txtMotachitiet);
         lvComment = findViewById(R.id.lvComment);
         edtNoidung = findViewById(R.id.edt_noidung1);
-
         arrayComment = new ArrayList<>();
         commentAdapter = new CommentAdapter(arrayComment, getApplicationContext());
         lvComment.setAdapter(commentAdapter);

@@ -19,6 +19,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = getWritableDatabase();
         database.execSQL(sql);
     }
+
     public void insertData(Integer id, String name, String adress, String image, String description, String price, Integer typefoodId) {
         SQLiteDatabase database = getWritableDatabase();
         String sql = "INSERT INTO FOOD VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -62,4 +63,5 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
 }

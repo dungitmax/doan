@@ -62,8 +62,8 @@ public class FavoriteFragment extends Fragment {
             Integer typefoodId = cursor.getInt(6);
             list.add(new Food(id, name, address, image, description, price, typefoodId));
         }
-        ThongBao();
         adapter.notifyDataSetChanged();
+        ThongBao();
         lvYeuThich.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

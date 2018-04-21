@@ -3,7 +3,6 @@ package com.example.tandung_pc.monngonduongpho.View;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -41,7 +40,6 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
     Button btnThem, btnThoat;
     Spinner spinner;
     ProgressDialog progressDialog;
-    String user_id = "";
     //Image request code
     private int PICK_IMAGE_REQUEST = 1;
     //Bitmap to get image from gallery
@@ -70,7 +68,6 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         btnThem.setOnClickListener(this);
         btnThoat.setOnClickListener(this);
         imageView.setOnClickListener(this);
-        user_id = "1";
     }
 
     private void initSpinner() {
@@ -97,6 +94,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         String price = edtPrice.getText().toString();
         String information = edtInformation.getText().toString();
         String temp = spinner.getSelectedItem().toString();
+        String id = FragmentThongTinTaiKhoan.iduser.toString();
 
         String idFoodtype = "";
         if (temp.equals("Bún,Phở")) {
@@ -141,10 +139,10 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
                         .addParameter("address", address) //Adding text parameter to the request
                         .addParameter("price", price) //Adding text parameter to the request
                         .addParameter("description", information) //Adding text parameter to the request
-                        .addParameter("idcuahang", "1") //Adding text parameter to the request
+                        .addParameter("idcuahang", "") //Adding text parameter to the request
                         .addParameter("typefood_id", idFoodtype) //Adding text parameter to the request
-                        .addParameter("user_id", "1") //Adding text parameter to the request
-                        .addParameter("comment_id", "1") //Adding text parameter to the request
+                        .addParameter("user_id", id) //Adding text parameter to the request
+                        .addParameter("comment_id", "") //Adding text parameter to the request
                         .setNotificationConfig(new UploadNotificationConfig())
                         .setMaxRetries(2)
                         .startUpload(); //Starting the upload

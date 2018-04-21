@@ -25,6 +25,7 @@ import org.json.JSONObject;
  */
 
 public class FragmentThongTinTaiKhoan extends android.support.v4.app.Fragment {
+    public static String iduser = "";
     TextView txtTen, txtUsername, txtDiachi;
 
     @Nullable
@@ -50,18 +51,20 @@ public class FragmentThongTinTaiKhoan extends android.support.v4.app.Fragment {
                             txtTen.setText(name);
                             txtUsername.setText(username);
                             txtDiachi.setText(diachi);
+                            MainActivity.txtEmail.setText(username);
+                            MainActivity.txtName.setText(name);
+                            iduser = id;
                         }
                         if (MainActivity.getGmail.equals("ltandungit@gmail.com")) {
                             txtTen.setText("Lê Tấn Dũng");
                             txtUsername.setText("ltandungit@gmail.com");
                             txtDiachi.setText("Nam Phú-Tiền Hải-Thái Bình");
                         }
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -71,8 +74,6 @@ public class FragmentThongTinTaiKhoan extends android.support.v4.app.Fragment {
 
         });
         requestQueue.add(jsonArrayRequest);
-
-
         return view;
     }
 }
