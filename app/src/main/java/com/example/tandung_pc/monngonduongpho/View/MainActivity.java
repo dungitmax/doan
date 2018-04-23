@@ -35,14 +35,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     boolean doubleBackToExitPressedOnce = false;
     String url_image;
     ImageView mImageView;
-    String[] title = {
-            "Bún,Phở",
-            "Món chè",
-            "Nước uống",
-            "Đồ chiên,nướng",
-            "Bánh mì",
-            "Các món khác"
-    };
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
