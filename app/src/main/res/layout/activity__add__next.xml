@@ -10,8 +10,6 @@
     tools:context=".View.Activity_Add_Next">
 
     <TextView
-
-        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -52,7 +50,7 @@
         android:layout_height="wrap_content"
         android:hint="Giá" />
 
-    <EditText
+        <EditText
         android:id="@+id/Address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

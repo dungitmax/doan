@@ -3,13 +3,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/thongtinlienhe"
-            android:icon="@drawable/iconinformation"
-            android:title="Thông tin liên hệ" />
-        <item
             android:id="@+id/dangmonan"
             android:icon="@drawable/ic_add_black_24dp"
             android:title="Đăng món ăn" />
+        <item
+            android:id="@+id/thongtinlienhe"
+            android:icon="@drawable/iconinformation"
+            android:title="Thông tin liên hệ" />
         <item
             android:id="@+id/exit"
             android:icon="@drawable/exit"

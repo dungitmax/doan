@@ -14,7 +14,6 @@ import com.example.tandung_pc.monngonduongpho.Adapter.ViewPagerAdapterDangNhap;
 import com.example.tandung_pc.monngonduongpho.R;
 
 public class AccountFragment extends Fragment {
-    Toolbar toolbar;
     TabLayout tabs;
     ViewPager viewPager;
     ViewPagerAdapterDangNhap viewPagerAdapterDangNhap;

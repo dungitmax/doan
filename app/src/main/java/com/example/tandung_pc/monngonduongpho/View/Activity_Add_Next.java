@@ -40,6 +40,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
     Button btnThem, btnThoat;
     Spinner spinner;
     ProgressDialog progressDialog;
+    String user_id = "";
     //Image request code
     private int PICK_IMAGE_REQUEST = 1;
     //Bitmap to get image from gallery
@@ -94,9 +95,8 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         String price = edtPrice.getText().toString();
         String information = edtInformation.getText().toString();
         String temp = spinner.getSelectedItem().toString();
-        String id = FragmentThongTinTaiKhoan.iduser.toString();
-
         String idFoodtype = "";
+
         if (temp.equals("Bún,Phở")) {
             idFoodtype = "1";
         } else if (temp.equals("Món chè")) {
@@ -116,14 +116,14 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        progressDialog.dismiss();
 
 
         if (name.equals("") || address.equals("") || price.equals("") || temp.equals("")
                 || information.equals("")) {
             progressDialog.dismiss();
-            Toast.makeText(Activity_Add_Next.this, "Bạn hãy nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Activity_Add_Next.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         } else {
+
             //getting the actual path of the image
             String path = getPath(filePath);
             Log.d("PATH", path);
@@ -131,34 +131,31 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
             //Uploading code
             try {
                 String uploadId = UUID.randomUUID().toString();
-
                 //Creating a multi part request
-                new MultipartUploadRequest(this, uploadId, Server.DuongdanUploadImage)
+                new MultipartUploadRequest(Activity_Add_Next.this, uploadId, Server.DuongdanUploadImage)
                         .addFileToUpload(path, "image") //Adding file
-                        .addParameter("name", name) //Adding text parameter to the request
-                        .addParameter("address", address) //Adding text parameter to the request
-                        .addParameter("price", price) //Adding text parameter to the request
-                        .addParameter("description", information) //Adding text parameter to the request
-                        .addParameter("idcuahang", "") //Adding text parameter to the request
-                        .addParameter("typefood_id", idFoodtype) //Adding text parameter to the request
-                        .addParameter("user_id", id) //Adding text parameter to the request
-                        .addParameter("comment_id", "") //Adding text parameter to the request
+                        .addParameter("name", name)
+                        .addParameter("price", price)
+                        .addParameter("address", address)
+                        .addParameter("description", information)
+                        .addParameter("idcuahang", "1")
+                        .addParameter("typefood_id", idFoodtype)
+                        .addParameter("user_id", "1")
+                        .addParameter("comment_id", "1")
                         .setNotificationConfig(new UploadNotificationConfig())
                         .setMaxRetries(2)
                         .startUpload(); //Starting the upload
-
-
-                Intent intent = new Intent(Activity_Add_Next.this, MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 Toast.makeText(this, "Tải lên thành công !", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
+                finish();
 
             } catch (Exception exc) {
-                Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }
+                Toast.makeText(this, "Có lỗi, Vui lòng thử lại !", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }        }
 
     }
-
 
     //method to show file chooser
     private void showFileChooser() {
