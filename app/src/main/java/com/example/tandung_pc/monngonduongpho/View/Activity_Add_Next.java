@@ -35,6 +35,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
     //
+    private static final int SELECT_PICTURE = 100;
     ImageView imageView;
     EditText edtNameFood, edtPrice, edtAddress, edtInformation;
     Button btnThem, btnThoat;
@@ -153,16 +154,32 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
             } catch (Exception exc) {
                 Toast.makeText(this, "Có lỗi, Vui lòng thử lại !", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-            }        }
+            }
+        }
 
     }
 
     //method to show file chooser
     private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        Intent in = new Intent();
+        in.setType("image/*");
+        in.setAction(Intent.ACTION_GET_CONTENT);
+
+        //Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        String pickTitle = "Lựa chọn hình"; // Or get from strings.xml
+        Intent chooserIntent = Intent.createChooser(in, pickTitle);
+        chooserIntent.putExtra
+                (
+                        Intent.EXTRA_INITIAL_INTENTS,
+                        new Intent[]{pickPhoto}
+                );
+        startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST);
     }
 
 
@@ -245,6 +262,8 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
                 finish();
                 break;
             case R.id.btnThoat:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 finish();
                 break;
         }

@@ -22,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tandung_pc.monngonduongpho.Adapter.PlaceAutocompleteAdapter;
 import com.example.tandung_pc.monngonduongpho.GPSTracker.GPSTracker;
@@ -177,7 +176,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                     });
                     LatLng myLocation = new LatLng(latitude, longitude);
                     //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
+                    googleMap.addMarker(new MarkerOptions().position(myLocation).title("Vị trí của tôi"));
                     // For zooming automatically to the location of the marker
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(16).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -247,12 +246,11 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                         }
                     });
                     LatLng myLocation = new LatLng(latitude, longitude);
-                    Toast.makeText(getActivity(), myLocation.toString(), Toast.LENGTH_SHORT).show();
                     //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
+                    googleMap.addMarker(new MarkerOptions().position(myLocation).title("Vị trí của tôi"));
                     // For zooming automatically to the location of the marker
-//                    CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(16).build();
-//                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(16).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 } else {
                     gps.showSettingsAlert();
                 }
