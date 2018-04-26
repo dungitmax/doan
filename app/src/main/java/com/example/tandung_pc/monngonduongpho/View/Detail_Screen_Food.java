@@ -248,9 +248,6 @@ public class Detail_Screen_Food extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                int madanhgia1;
-                int makhachhang1;
-                int masp1;
                 String username1;
                 String noidung1;
                 if (response != null && response.length() != 2) {

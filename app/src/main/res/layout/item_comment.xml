@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Tên hiển thị"
                 android:textColor="#3b6bcc"
-                android:textSize="16dp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="Nội dung"
             android:textColor="#414345"
-            android:textSize="14dp"
+            android:textSize="15sp"
             />
         </LinearLayout>
     </LinearLayout>
