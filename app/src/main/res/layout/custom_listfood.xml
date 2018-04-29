@@ -12,6 +12,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="30dp"
         android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout

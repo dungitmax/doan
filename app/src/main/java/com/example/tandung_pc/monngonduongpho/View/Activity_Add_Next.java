@@ -35,7 +35,6 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
     //
-    private static final int SELECT_PICTURE = 100;
     ImageView imageView;
     EditText edtNameFood, edtPrice, edtAddress, edtInformation;
     Button btnThem, btnThoat;
@@ -48,6 +47,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
     private Bitmap bitmap;
     //Uri to store the image uri
     private Uri filePath;
+    private boolean checkClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +117,6 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.show();
-
-
         if (name.equals("") || address.equals("") || price.equals("") || temp.equals("")
                 || information.equals("")) {
             progressDialog.dismiss();
@@ -255,11 +253,14 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_bg:
+                checkClick = true;
                 showFileChooser();
                 break;
             case R.id.btnThem:
-                uploadMultipart();
-                finish();
+                if (checkClick) {
+                    uploadMultipart();
+                }
+                Toast.makeText(this, "Bạn chưa chọn ảnh !", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnThoat:
                 Intent intent = new Intent(this, MainActivity.class);

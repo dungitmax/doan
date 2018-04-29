@@ -15,7 +15,7 @@ public class CommentRequest extends StringRequest {
     private static final String url = Server.DuongdanSendComment;
     private Map<String, String> params;
 
-    public CommentRequest(String user_id, String food_id, String username, String text_comment, Response.Listener<String> listener) {
+    public CommentRequest(int user_id, int food_id, String username, String text_comment, Response.Listener<String> listener) {
         super(Method.POST, url, listener, null);
         params = new HashMap<>();
         params.put("user_id", String.valueOf(user_id));

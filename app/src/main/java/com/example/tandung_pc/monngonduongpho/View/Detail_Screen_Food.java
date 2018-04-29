@@ -51,7 +51,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
     String Motachitiet = "";
     int IdTypeFood = 0;
     int maFood;
-    String id = "";
+    int id;
     String name = "";
     String username = "";
     ArrayList<ModelComment> arrayComment;
@@ -65,10 +65,10 @@ public class Detail_Screen_Food extends AppCompatActivity {
         Anhxa();
         Actiontoolbar();
         GetInfomation();
+        Getdata();
         sendComment();
         helper = new MyDatabaseHelper(this, "Foodd.db", null, 1);
         helper.queryData("CREATE TABLE IF NOT EXISTS FOOD(Id INTEGER PRIMARY KEY, name VARCHAR,address TEXT,image TEXT,description TEXT,price TEXT,typefoodId INTEGER)");
-        Getdata();
     }
 
 
@@ -76,7 +76,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
         findViewById(R.id.btn_sendcoment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String noidung = edtNoidung.getText().toString();
+                String noidung = edtNoidung.getText().toString().trim();
                 if (noidung.equals("")) {
                     Toast.makeText(getApplicationContext(), "Bạn chưa nhập nội dung đánh giá !", Toast.LENGTH_SHORT).show();
                 } else if (MainActivity.getten.equals("")) {
@@ -85,14 +85,13 @@ public class Detail_Screen_Food extends AppCompatActivity {
                     Response.Listener<String> listener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-
-                            Toast.makeText(getApplicationContext(), "Bình luận thành công !", Toast.LENGTH_SHORT).show();
                             edtNoidung.setText("");
                             arrayComment = new ArrayList<>();
                             commentAdapter = new CommentAdapter(arrayComment, getApplicationContext());
                             lvComment.setAdapter(commentAdapter);
                             Getdata();
                             GetUser();
+                            Toast.makeText(getApplicationContext(), "Bình luận thành công !", Toast.LENGTH_SHORT).show();
                         }
                     };
 //                    SharedPreferences preferences = getSharedPreferences("getuserid", MODE_PRIVATE);
@@ -101,11 +100,11 @@ public class Detail_Screen_Food extends AppCompatActivity {
 //                    String id_user = preferences.getString("user_id", "");
 //                    Log.d("eee", id_user);
                     if (MainActivity.getten.equals("ltandungit@gmail.com")) {
-                        CommentRequest request = new CommentRequest(id, String.valueOf(maFood), "Lê Tấn Dũng", noidung, listener);
+                        CommentRequest request = new CommentRequest(id, maFood, "Lê Tấn Dũng", noidung, listener);
                         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                         queue.add(request);
                     } else {
-                        CommentRequest request = new CommentRequest(id, String.valueOf(maFood), MainActivity.getten, noidung, listener);
+                        CommentRequest request = new CommentRequest(id, maFood, MainActivity.getten, noidung, listener);
                         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                         queue.add(request);
                     }
@@ -147,7 +146,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-                        id = jsonObject.getString("user_id");
+                        id = jsonObject.getInt("user_id");
                         String username = jsonObject.getString("username");
                         name = jsonObject.getString("name_User");
                         String diachi = jsonObject.getString("address");

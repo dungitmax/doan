@@ -58,7 +58,7 @@ public class FragmentThongTinTaiKhoan extends android.support.v4.app.Fragment {
                         if (MainActivity.getGmail.equals("ltandungit@gmail.com")) {
                             txtTen.setText("Lê Tấn Dũng");
                             txtUsername.setText("ltandungit@gmail.com");
-                            txtDiachi.setText("Nam Phú-Tiền Hải-Thái Bình");
+                            txtDiachi.setText("Thái Bình");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

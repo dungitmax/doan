@@ -1,6 +1,7 @@
 package com.example.tandung_pc.monngonduongpho.View;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,9 +12,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -44,6 +49,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,6 +59,8 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
         GoogleMap.OnMyLocationClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String KEY_MAP_SAVED_STATE = "mapState";
     private static final String TAG = "FragmentMap";
+    private static final CharSequence[] MAP_TYPE_ITEMS =
+            {"Road Map", "Hybrid", "Satellite", "Terrain"};
     private static final float DEFAULT_ZOOM = 15f;
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
     MapView mMapView;
@@ -65,6 +73,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
     private PlaceAutocompleteAdapter mAdapter;
     private GoogleApiClient mGoogleApiClient;
     private PlaceInfo mPlace;
+    private LatLng myLocation;
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(@NonNull PlaceBuffer places) {
@@ -151,8 +160,6 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                     // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
-
-
                 googleMap.setMyLocationEnabled(true);
 
                 // googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
@@ -174,7 +181,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                             return false;
                         }
                     });
-                    LatLng myLocation = new LatLng(latitude, longitude);
+                     myLocation = new LatLng(latitude, longitude);
                     //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
                     googleMap.addMarker(new MarkerOptions().position(myLocation).title("Vị trí của tôi"));
                     // For zooming automatically to the location of the marker
@@ -184,10 +191,35 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                     gps.showSettingsAlert();
                 }
                 init();
+                //
+//                googleMap.addPolyline(new PolylineOptions().add(
+//                        )
+//                );
+
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.choose_type_map, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.chooseTypeMap) {
+            showMapTypeSelectorDialog();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void moveCamera(LatLng latLng, float zoom, String title) {
@@ -266,10 +298,8 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
         List<Address> list = new ArrayList<>();
         try {
             list = geocoder.getFromLocationName(searchString, 1);
-
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
-
         }
         if (list.size() > 0) {
             Address address = list.get(0);
@@ -345,5 +375,49 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
     private void hideSoftKeyboard() {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
+
+    private void showMapTypeSelectorDialog() {
+        // Prepare the dialog by setting up a Builder.
+        final String fDialogTitle = "Chọn kiểu bản đồ";
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(fDialogTitle);
+
+        // Find the current map type to pre-check the item representing the current state.
+        int checkItem = googleMap.getMapType() - 1;
+
+        // Add an OnClickListener to the dialog, so that the selection will be handled.
+        builder.setSingleChoiceItems(
+                MAP_TYPE_ITEMS,
+                checkItem,
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int item) {
+                        // Locally create a finalised object.
+
+                        // Perform an action depending on which item was selected.
+                        switch (item) {
+                            case 1:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                                break;
+                            case 2:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                                break;
+                            case 3:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                                break;
+                            default:
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        }
+                        dialog.dismiss();
+                    }
+                }
+        );
+
+        // Build the dialog and show it.
+        AlertDialog fMapTypeDialog = builder.create();
+        fMapTypeDialog.setCanceledOnTouchOutside(true);
+        fMapTypeDialog.show();
+    }
+
 
 }

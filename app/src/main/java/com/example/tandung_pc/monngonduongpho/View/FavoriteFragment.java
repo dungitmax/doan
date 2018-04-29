@@ -44,6 +44,7 @@ public class FavoriteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         lvYeuThich = view.findViewById(R.id.lvYeuThich);
         txtThongBao = view.findViewById(R.id.txtThongBao);
+
         list = new ArrayList<>();
         helper = new MyDatabaseHelper(getActivity().getApplicationContext(), "Foodd.db", null, 1);
         adapter = new FoodListAdapter(getActivity(), R.layout.custom_listfood, list);
@@ -89,8 +90,6 @@ public class FavoriteFragment extends Fragment {
             lvYeuThich.setVisibility(View.VISIBLE);
             adapter.notifyDataSetChanged();
         }
-
-
     }
 
     @Override

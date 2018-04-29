@@ -1,93 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_next"
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    tools:context=".View.Activity_Add_Next">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Nhấn vào camera để tải ảnh lên"
-        android:textColor="#3b64ea"
-        android:textSize="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:text="Chú ý: Ảnh không liên quan sẽ bị xóa mà không báo trước"
-        android:textColor="#ff0000"
-        android:textSize="13dp" />
-
-    <ImageView
-        android:id="@+id/img_bg"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/addimage" />
-
-    <EditText
-        android:id="@+id/namFood"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_next"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tên món ăn" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        tools:context=".View.Activity_Add_Next">
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
-
-    <EditText
-        android:id="@+id/price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Giá" />
-
-        <EditText
-        android:id="@+id/Address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Địa điểm" />
-
-    <EditText
-        android:id="@+id/Thongtin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Thông tin" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
-
-        <Button
-            android:id="@+id/btnThem"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/selector_btnthem"
-            android:padding="10dp"
-            android:text="Thêm"
-            android:textColor="#fff" />
+            android:layout_marginTop="20dp"
+            android:text="Nhấn vào camera để tải ảnh lên"
+            android:textColor="#3b64ea"
+            android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/btnThoat"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="50dp"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/selector_btnthem"
-            android:padding="10dp"
-            android:text="Thoát "
-            android:textColor="#fff" />
-    </RelativeLayout>
-</LinearLayout>
+            android:layout_marginTop="7dp"
+            android:text="Chú ý: Ảnh không liên quan sẽ bị xóa mà không báo trước"
+            android:textColor="#ff0000"
+            android:textSize="13dp" />
+
+        <ImageView
+            android:id="@+id/img_bg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/addimage" />
+
+        <!--<EditText-->
+        <!--android:id="@+id/namFood"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Tên món ăn" />-->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.ClearEditText
+                android:id="@+id/namFood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tên món ăn" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"></Spinner>
+
+        <!--<EditText-->
+        <!--android:id="@+id/price"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Giá" />-->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.ClearEditText
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Giá" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.ClearEditText
+                android:id="@+id/Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Địa điểm" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <com.example.tandung_pc.monngonduongpho.CustomView.ClearEditText
+                android:id="@+id/Thongtin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Thông tin" />
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <Button
+                android:id="@+id/btnThem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/selector_btnthem"
+                android:padding="10dp"
+                android:text="Thêm"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/btnThoat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/selector_btnthem"
+                android:padding="10dp"
+                android:text="Thoát "
+                android:textColor="#fff" />
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

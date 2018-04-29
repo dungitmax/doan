@@ -88,12 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(this, "Không có kết nối Internet", Toast.LENGTH_SHORT).show();
         }
         InitView();
-        View hView = navigationView.getHeaderView(0);
-        navigationView.setNavigationItemSelectedListener(this);
-        txtName = hView.findViewById(R.id.txtName);
-        txtEmail = hView.findViewById(R.id.txtGmail);
-        mImageView = hView.findViewById(R.id.imgDisplayImage);
-        txtExit = hView.findViewById(R.id.txtExit);
         SetOnheader();
         ActionBar();
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -107,14 +101,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.replace(R.id.content, new HomeFragment()).commit();
         SharedPreferences preferences = getSharedPreferences("dangnhap", MODE_PRIVATE);
         txtName.setText(preferences.getString("username", ""));
-        mImageView.setImageDrawable(getResources().getDrawable(R.drawable.icontaikhoan));
-        //mImageView.setImageDrawable(getResources().getDrawable(R.drawable.icontaikhoan));
-        getten = txtName.getText().toString().trim();
         txtEmail.setText(preferences.getString("email", ""));
         String id = preferences.getString("id", "");
         url_image = "https://graph.facebook.com/" + id + "/picture?width=220&height=220";
-        Picasso.with(MainActivity.this).load(url_image.toString()).into(mImageView);
+        Picasso.with(MainActivity.this).load(url_image.toString()).placeholder(R.drawable.icontaikhoan).error(R.drawable.icontaikhoan).into(mImageView);
         String gmail = txtName.getText().toString().trim();
+        getten = txtName.getText().toString().trim();
         getGmail = txtEmail.getText().toString().trim();
         if (gmail.equals("")) {
             txtExit.setEnabled(false);
@@ -140,6 +132,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbarManHinhChinh);
         navigationViewManHinhChinh = findViewById(R.id.navigationViewManHinhChinh);
         drawerLayoutManHinhChinh = findViewById(R.id.drawerLayoutManHinhChinh);
+        View hView = navigationView.getHeaderView(0);
+        navigationView.setNavigationItemSelectedListener(this);
+        txtName = hView.findViewById(R.id.txtName);
+        txtEmail = hView.findViewById(R.id.txtGmail);
+        mImageView = hView.findViewById(R.id.imgDisplayImage);
+        txtExit = hView.findViewById(R.id.txtExit);
     }
 
     private void ActionBar() {

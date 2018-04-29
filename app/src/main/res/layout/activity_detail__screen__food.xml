@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/detail"
     tools:context="com.example.tandung_pc.monngonduongpho.View.Detail_Screen_Food">
 
     <android.support.v7.widget.Toolbar
@@ -93,14 +94,14 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:textColor="#3b3784"
-                        android:text="aaaaaaaaaaaaa"
                         android:id="@+id/txtMotachitiet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:paddingBottom="10dp"
+                        android:text="aaaaaaaaaaaaa"
+                        android:textColor="#3b3784"
                         android:textSize="17sp" />
 
                 </LinearLayout>
