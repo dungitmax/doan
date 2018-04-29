@@ -1,8 +1,10 @@
 package com.example.tandung_pc.monngonduongpho.View;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -26,10 +28,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tandung_pc.monngonduongpho.Adapter.PlaceAutocompleteAdapter;
 import com.example.tandung_pc.monngonduongpho.GPSTracker.GPSTracker;
+import com.example.tandung_pc.monngonduongpho.Model.ModelFindTheWay.DirectionFinder;
+import com.example.tandung_pc.monngonduongpho.Model.ModelFindTheWay.DirectionFinderListener;
+import com.example.tandung_pc.monngonduongpho.Model.ModelFindTheWay.Route;
 import com.example.tandung_pc.monngonduongpho.Model.PlaceInfo;
 import com.example.tandung_pc.monngonduongpho.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -48,14 +55,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButtonClickListener,
+public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, DirectionFinderListener,
         GoogleMap.OnMyLocationClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String KEY_MAP_SAVED_STATE = "mapState";
     private static final String TAG = "FragmentMap";
@@ -67,6 +77,11 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
     GoogleMap googleMap;
     double latitude;
     double longitude;
+    private LinearLayout line;
+    private ProgressDialog progressDialog;
+    private List<Marker> originMarkers;
+    private List<Marker> destinationMarkers;
+    private List<Polyline> polylinePaths;
     private GPSTracker gps;
     private AutoCompleteTextView mSearchText;
     private ImageView mGps;
@@ -74,6 +89,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
     private GoogleApiClient mGoogleApiClient;
     private PlaceInfo mPlace;
     private LatLng myLocation;
+    private TextView tvDuration, tvDistance;
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(@NonNull PlaceBuffer places) {
@@ -111,6 +127,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
             final String placeId = item.getPlaceId();
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            sendRequest();
         }
     };
 
@@ -125,6 +142,10 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mMapView = view.findViewById(R.id.mapView);
         mSearchText = view.findViewById(R.id.input_search);
+        tvDistance = view.findViewById(R.id.tvDistance);
+        tvDuration = view.findViewById(R.id.tvDuration);
+        line = view.findViewById(R.id.line);
+        line.setVisibility(View.INVISIBLE);
         mGps = view.findViewById(R.id.ic_gps);
         Bundle mapState = (savedInstanceState != null)
                 ? savedInstanceState.getBundle(KEY_MAP_SAVED_STATE) : null;
@@ -181,7 +202,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                             return false;
                         }
                     });
-                     myLocation = new LatLng(latitude, longitude);
+                    myLocation = new LatLng(latitude, longitude);
                     //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
                     googleMap.addMarker(new MarkerOptions().position(myLocation).title("Vị trí của tôi"));
                     // For zooming automatically to the location of the marker
@@ -191,10 +212,6 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                     gps.showSettingsAlert();
                 }
                 init();
-                //
-//                googleMap.addPolyline(new PolylineOptions().add(
-//                        )
-//                );
 
             }
         });
@@ -254,8 +271,10 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                         || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
                     geoLocate();
 
+
                 }
                 return false;
+
             }
         });
         mGps.setOnClickListener(new View.OnClickListener() {
@@ -286,10 +305,23 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                 } else {
                     gps.showSettingsAlert();
                 }
-
             }
         });
         hideSoftKeyboard();
+    }
+
+    private void sendRequest() {
+        String origin = myLocation.latitude + ", " + myLocation.longitude;
+        String destination = mSearchText.getText().toString();
+        if (destination.isEmpty()) {
+            Toast.makeText(getActivity(), "Vui lòng nhập địa chỉ !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            new DirectionFinder(this, origin, destination).execute();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     private void geoLocate() {
@@ -420,4 +452,60 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
     }
 
 
+    @Override
+    public void onDirectionFinderStart() {
+        progressDialog = ProgressDialog.show(getActivity(), "Please wait.",
+                "Finding direction..!", true);
+
+        if (originMarkers != null) {
+            for (Marker marker : originMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (destinationMarkers != null) {
+            for (Marker marker : destinationMarkers) {
+                marker.remove();
+            }
+        }
+
+        if (polylinePaths != null) {
+            for (Polyline polyline : polylinePaths) {
+                polyline.remove();
+            }
+        }
+    }
+
+    @Override
+    public void onDirectionFinderSuccess(List<Route> routes) {
+        progressDialog.dismiss();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        line.setVisibility(View.VISIBLE);
+        polylinePaths = new ArrayList<>();
+        originMarkers = new ArrayList<>();
+        destinationMarkers = new ArrayList<>();
+
+        for (Route route : routes) {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
+            tvDuration.setText(route.duration.text);
+            tvDistance.setText(route.distance.text);
+
+            originMarkers.add(googleMap.addMarker(new MarkerOptions()
+                    .title(route.startAddress)
+                    .position(route.startLocation)));
+            destinationMarkers.add(googleMap.addMarker(new MarkerOptions()
+                    .title(route.endAddress)
+                    .position(route.endLocation)));
+
+            PolylineOptions polylineOptions = new PolylineOptions().
+                    geodesic(true).
+                    color(Color.BLUE).
+                    width(10);
+
+            for (int i = 0; i < route.points.size(); i++)
+                polylineOptions.add(route.points.get(i));
+
+            polylinePaths.add(googleMap.addPolyline(polylineOptions));
+        }
+    }
 }

@@ -45,17 +45,18 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relLayout1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="#FFFFFF"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/bando"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
@@ -84,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:text="0 min" />
+            android:text="0 mins" />
     </LinearLayout>
 
     <ImageView
