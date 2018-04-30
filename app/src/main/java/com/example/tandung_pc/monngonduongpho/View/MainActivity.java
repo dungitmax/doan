@@ -100,11 +100,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content, new HomeFragment()).commit();
         SharedPreferences preferences = getSharedPreferences("dangnhap", MODE_PRIVATE);
-        txtName.setText(preferences.getString("username", ""));
-        txtEmail.setText(preferences.getString("email", ""));
+        txtName.setText(preferences.getString("name", ""));
+        txtEmail.setText(preferences.getString("username", ""));
         String id = preferences.getString("id", "");
         url_image = "https://graph.facebook.com/" + id + "/picture?width=220&height=220";
         Picasso.with(MainActivity.this).load(url_image.toString()).placeholder(R.drawable.icontaikhoan).error(R.drawable.icontaikhoan).into(mImageView);
+        SharedPreferences preferences1 = getSharedPreferences("dangnhapface", MODE_PRIVATE);
+        boolean loginface = preferences1.getBoolean("loginface", false);
+        if (loginface) {
+            String idd = preferences1.getString("id", "");
+            url_image = "https://graph.facebook.com/" + idd + "/picture?width=220&height=220";
+            Picasso.with(MainActivity.this).load(url_image.toString()).placeholder(R.drawable.icontaikhoan).error(R.drawable.icontaikhoan).into(mImageView);
+            txtName.setText(preferences1.getString("username", ""));
+            txtEmail.setText(preferences1.getString("email", ""));
+        }
         String gmail = txtName.getText().toString().trim();
         getten = txtName.getText().toString().trim();
         getGmail = txtEmail.getText().toString().trim();
@@ -119,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     finish();
                     SharedPreferences settings = getSharedPreferences("dangnhap", MODE_PRIVATE);
                     settings.edit().clear().commit();
+                    SharedPreferences settings1 = getSharedPreferences("dangnhapface", MODE_PRIVATE);
+                    settings1.edit().clear().commit();
                     txtExit.setText("");
                     mImageView.setImageDrawable(getResources().getDrawable(R.drawable.icontaikhoan));
                     startActivity(intent);

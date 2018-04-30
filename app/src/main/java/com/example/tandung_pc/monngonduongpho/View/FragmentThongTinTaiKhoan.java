@@ -1,5 +1,6 @@
 package com.example.tandung_pc.monngonduongpho.View;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -7,18 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.tandung_pc.monngonduongpho.R;
-import com.example.tandung_pc.monngonduongpho.until.Server;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by TANDUNG-PC on 3/18/2018.
@@ -36,44 +26,52 @@ public class FragmentThongTinTaiKhoan extends android.support.v4.app.Fragment {
         txtUsername = view.findViewById(R.id.txtUsername);
         txtDiachi = view.findViewById(R.id.txtDiachi);
         //
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Server.DuongdanGetUser, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        String id = jsonObject.getString("user_id");
-                        String username = jsonObject.getString("username");
-                        String name = jsonObject.getString("name_User");
-                        String diachi = jsonObject.getString("address");
-                        if (MainActivity.getten.equals(username)) {
-                            txtTen.setText(name);
-                            txtUsername.setText(username);
-                            txtDiachi.setText(diachi);
-                            MainActivity.txtEmail.setText(username);
-                            MainActivity.txtName.setText(name);
-                            iduser = id;
-                        }
-                        if (MainActivity.getGmail.equals("ltandungit@gmail.com")) {
-                            txtTen.setText("Lê Tấn Dũng");
-                            txtUsername.setText("ltandungit@gmail.com");
-                            txtDiachi.setText("Thái Bình");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+//        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Server.DuongdanGetUser, null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                for (int i = 0; i < response.length(); i++) {
+//                    try {
+//                        JSONObject jsonObject = response.getJSONObject(i);
+//                        String id = jsonObject.getString("user_id");
+//                        String username = jsonObject.getString("username");
+//                        String name = jsonObject.getString("name_User");
+//                        String diachi = jsonObject.getString("address");
+//                        if (MainActivity.getten.equals(username) && FragmentDangNhap.clickFace == false) {
+//                            txtTen.setText(name);
+//                            txtUsername.setText(username);
+//                            txtDiachi.setText(diachi);
+//                            MainActivity.txtEmail.setText(username);
+//                            MainActivity.txtName.setText(name);
+//                            iduser = id;
+//                        } else if (FragmentDangNhap.clickFace == true) {
+//                            txtTen.setText(MainActivity.getten);
+//                            txtUsername.setText(MainActivity.getGmail);
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//            }
+//        });
+//        requestQueue.add(jsonArrayRequest);
+        SharedPreferences preferences = getActivity().getSharedPreferences("dangnhap", getActivity().MODE_PRIVATE);
+        txtTen.setText(preferences.getString("name", ""));
+        txtUsername.setText(preferences.getString("username", ""));
+        txtDiachi.setText(preferences.getString("address", ""));
+        SharedPreferences preferences1 = getActivity().getSharedPreferences("dangnhapface", getActivity().MODE_PRIVATE);
+        boolean loginface = preferences1.getBoolean("loginface", false);
+        if (loginface) {
+            txtTen.setText(preferences1.getString("username", ""));
+            txtUsername.setText(preferences1.getString("email", ""));
+        }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-
-        });
-        requestQueue.add(jsonArrayRequest);
         return view;
     }
 }

@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FragmentDangNhap extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
+    public static boolean clickFace = false;
     CallbackManager callbackManager;
     Button btnFacebook, btnDangNhap;
     EditText edtUsername, edtMK;
@@ -95,6 +96,7 @@ public class FragmentDangNhap extends Fragment implements NavigationView.OnNavig
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clickFace = false;
                 final String username = edtUsername.getText().toString();
                 final String password = edtMK.getText().toString();
                 if (username.isEmpty() || password.isEmpty()) {
@@ -118,7 +120,14 @@ public class FragmentDangNhap extends Fragment implements NavigationView.OnNavig
                                     //luu sesson dang nhap
                                     SharedPreferences preferences = getContext().getSharedPreferences("dangnhap", getContext().MODE_PRIVATE);
                                     SharedPreferences.Editor editor = preferences.edit();
+                                    int user_id = object.getInt("user_id");
+                                    String name = object.getString("name_User");
+                                    String username = object.getString("username");
+                                    String address = object.getString("address");
+                                    editor.putInt("iduser", user_id);
+                                    editor.putString("name", name);
                                     editor.putString("username", username);
+                                    editor.putString("address", address);
                                     editor.putString("exit", "Đăng xuất");
                                     editor.commit();
                                     startActivity(intent);
@@ -150,8 +159,8 @@ public class FragmentDangNhap extends Fragment implements NavigationView.OnNavig
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clickFace = true;
                 LoginManager.getInstance().logInWithReadPermissions(FragmentDangNhap.this, Arrays.asList("public_profile", "email", "user_birthday"));
-
             }
         });
 
@@ -197,17 +206,19 @@ public class FragmentDangNhap extends Fragment implements NavigationView.OnNavig
                     tennguoidung = object.getString("name");
                     email = object.getString("email");
                     id = object.getString("id");
-                    Log.d("facee", tennguoidung + email);
+                    Log.d("facee", tennguoidung + email + id);
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
 
-                    SharedPreferences preferences = getContext().getSharedPreferences("dangnhap", getContext().MODE_PRIVATE);
+                    SharedPreferences preferences = getContext().getSharedPreferences("dangnhapface", getContext().MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
+                    clickFace = true;
+                    editor.putBoolean("loginface", clickFace);
                     editor.putInt("1", R.mipmap.ic_launcher);
                     editor.putString("username", tennguoidung);
                     editor.putString("email", email);
                     editor.putString("id", id);
-                    editor.putString("b", "Đăng xuất");
+                    editor.putString("exit", "Đăng xuất");
                     editor.commit();
                     startActivity(intent);
                     Log.d("tennguoidung", tennguoidung);

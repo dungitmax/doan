@@ -113,8 +113,8 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
             } catch (NullPointerException e) {
                 Log.e(TAG, "onResult: NullPointerException: " + e.getMessage());
             }
-            moveCamera(new LatLng(place.getViewport().getCenter().latitude,
-                    place.getViewport().getCenter().longitude), DEFAULT_ZOOM, mPlace.getName());
+//            moveCamera(new LatLng(place.getViewport().getCenter().latitude,
+//                    place.getViewport().getCenter().longitude), DEFAULT_ZOOM, mPlace.getName());
 
             places.release();
         }
@@ -204,7 +204,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                     });
                     myLocation = new LatLng(latitude, longitude);
                     //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-                    googleMap.addMarker(new MarkerOptions().position(myLocation).title("Vị trí của tôi"));
+                    //googleMap.addMarker(new MarkerOptions().position(myLocation).title("Vị trí của tôi"));
                     // For zooming automatically to the location of the marker
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(16).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -298,7 +298,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                     });
                     LatLng myLocation = new LatLng(latitude, longitude);
                     //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-                    googleMap.addMarker(new MarkerOptions().position(myLocation).title("Vị trí của tôi"));
+                    // googleMap.addMarker(new MarkerOptions().position(myLocation).title("Vị trí của tôi"));
                     // For zooming automatically to the location of the marker
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(myLocation).zoom(16).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -336,7 +336,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
         if (list.size() > 0) {
             Address address = list.get(0);
             // Toast.makeText(getActivity(), address.toString(), Toast.LENGTH_SHORT).show();
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
+            // moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
         }
     }
 
@@ -454,8 +454,8 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
 
     @Override
     public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(getActivity(), "Please wait.",
-                "Finding direction..!", true);
+        progressDialog = ProgressDialog.show(getActivity(), "Vui lòng chờ...",
+                "Đang tìm đường...!", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -486,7 +486,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 15));
             tvDuration.setText(route.duration.text);
             tvDistance.setText(route.distance.text);
 

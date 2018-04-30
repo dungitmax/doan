@@ -3,6 +3,7 @@ package com.example.tandung_pc.monngonduongpho.View;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -126,7 +127,9 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
             //getting the actual path of the image
             String path = getPath(filePath);
             Log.d("PATH", path);
-
+            SharedPreferences preferences = getSharedPreferences("dangnhap", MODE_PRIVATE);
+            int id = preferences.getInt("iduser", 100);
+            Log.d("idd", String.valueOf(id));
             //Uploading code
             try {
                 String uploadId = UUID.randomUUID().toString();
@@ -137,10 +140,9 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
                         .addParameter("price", price)
                         .addParameter("address", address)
                         .addParameter("description", information)
-                        .addParameter("idcuahang", "1")
                         .addParameter("typefood_id", idFoodtype)
-                        .addParameter("user_id", "1")
-                        .addParameter("comment_id", "1")
+                        .addParameter("user_id", String.valueOf(id))
+                        .addParameter("comment_id", "100")
                         .setNotificationConfig(new UploadNotificationConfig())
                         .setMaxRetries(2)
                         .startUpload(); //Starting the upload

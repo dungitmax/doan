@@ -3,6 +3,7 @@ package com.example.tandung_pc.monngonduongpho.View;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +42,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
     public static MyDatabaseHelper helper;
     public static Food food;
     Toolbar toolbarChitietFood;
-    ImageView img_food;
+    ImageView img_food, btn_sendcoment;
     TextView txtTenfood, txtGiafood, txtDiadiem, txtMotafood;
     ListView lvComment;
     String Tenchitiet = "";
@@ -53,7 +54,6 @@ public class Detail_Screen_Food extends AppCompatActivity {
     int maFood;
     int id;
     String name = "";
-    String username = "";
     ArrayList<ModelComment> arrayComment;
     CommentAdapter commentAdapter;
     EditText edtNoidung;
@@ -73,7 +73,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
 
 
     private void sendComment() {
-        findViewById(R.id.btn_sendcoment).setOnClickListener(new View.OnClickListener() {
+        btn_sendcoment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String noidung = edtNoidung.getText().toString().trim();
@@ -99,16 +99,16 @@ public class Detail_Screen_Food extends AppCompatActivity {
 //                    String name = preferences1.getString("username", "");
 //                    String id_user = preferences.getString("user_id", "");
 //                    Log.d("eee", id_user);
-                    if (MainActivity.getten.equals("ltandungit@gmail.com")) {
-                        CommentRequest request = new CommentRequest(id, maFood, "Lê Tấn Dũng", noidung, listener);
-                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                        queue.add(request);
-                    } else {
-                        CommentRequest request = new CommentRequest(id, maFood, MainActivity.getten, noidung, listener);
-                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                        queue.add(request);
-                    }
-
+//                    if (MainActivity.getten.equals("ltandungit@gmail.com")) {
+//                        CommentRequest request = new CommentRequest(9, maFood, "Lê Tấn Dũng", noidung, listener);
+//                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+//                        queue.add(request);
+//                    } else {
+                    //GetUser();
+                    Log.d("idd", String.valueOf(id));
+                    CommentRequest request = new CommentRequest(id, maFood, MainActivity.getten, noidung, listener);
+                    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                    queue.add(request);
 //                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 //                    String duongdan = Server.DuongdanSendComment;
 //                    StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {
@@ -235,6 +235,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
         txtMotafood = findViewById(R.id.txtMotachitiet);
         lvComment = findViewById(R.id.lvComment);
         edtNoidung = findViewById(R.id.edt_noidung1);
+        btn_sendcoment = findViewById(R.id.btn_sendcoment);
         arrayComment = new ArrayList<>();
         commentAdapter = new CommentAdapter(arrayComment, getApplicationContext());
         lvComment.setAdapter(commentAdapter);
@@ -260,7 +261,6 @@ public class Detail_Screen_Food extends AppCompatActivity {
                             arrayComment.add(new ModelComment(username1, noidung1));
                             commentAdapter.notifyDataSetChanged();
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -285,5 +285,4 @@ public class Detail_Screen_Food extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-
 }
