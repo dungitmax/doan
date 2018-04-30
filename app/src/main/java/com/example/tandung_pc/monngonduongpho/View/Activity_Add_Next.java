@@ -41,7 +41,6 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
     Button btnThem, btnThoat;
     Spinner spinner;
     ProgressDialog progressDialog;
-    String user_id = "";
     //Image request code
     private int PICK_IMAGE_REQUEST = 1;
     //Bitmap to get image from gallery
@@ -120,10 +119,8 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         progressDialog.show();
         if (name.equals("") || address.equals("") || price.equals("") || temp.equals("")
                 || information.equals("")) {
-            progressDialog.dismiss();
             Toast.makeText(Activity_Add_Next.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         } else {
-
             //getting the actual path of the image
             String path = getPath(filePath);
             Log.d("PATH", path);
@@ -144,7 +141,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
                         .addParameter("user_id", String.valueOf(id))
                         .addParameter("comment_id", "100")
                         .setNotificationConfig(new UploadNotificationConfig())
-                        .setMaxRetries(2)
+                        .setMaxRetries(2).setUtf8Charset()
                         .startUpload(); //Starting the upload
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 Toast.makeText(this, "Tải lên thành công !", Toast.LENGTH_SHORT).show();
