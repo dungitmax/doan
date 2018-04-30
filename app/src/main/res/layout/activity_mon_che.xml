@@ -14,14 +14,19 @@
         android:background="#0a8eec"
         app:title="MÓN CHÈ"
         app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:titleTextColor="@color/white">
-    </android.support.v7.widget.Toolbar>
+        app:titleTextColor="@color/white"></android.support.v7.widget.Toolbar>
 
-    <ListView
-        android:id="@+id/listMonChe"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </ListView>
+        <ListView
+            android:id="@+id/listMonChe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
 

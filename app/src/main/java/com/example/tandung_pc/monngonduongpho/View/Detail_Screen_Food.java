@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
     String Hinhanhchitiet = "";
     String Diadiem = "";
     String Motachitiet = "";
+    LinearLayout layoutListView, layoutComment;
     int IdTypeFood = 0;
     int maFood;
     int id;
@@ -62,7 +64,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail__screen__food);
-        Anhxa();
+        InitView();
         Actiontoolbar();
         GetInfomation();
         Getdata();
@@ -226,7 +228,7 @@ public class Detail_Screen_Food extends AppCompatActivity {
     }
 
 
-    private void Anhxa() {
+    private void InitView() {
         toolbarChitietFood = findViewById(R.id.toolbarID);
         img_food = findViewById(R.id.img_food);
         txtTenfood = findViewById(R.id.txtTenmonan);
@@ -235,11 +237,18 @@ public class Detail_Screen_Food extends AppCompatActivity {
         txtMotafood = findViewById(R.id.txtMotachitiet);
         lvComment = findViewById(R.id.lvComment);
         edtNoidung = findViewById(R.id.edt_noidung1);
+        layoutListView = findViewById(R.id.layoutListView);
+        layoutComment = findViewById(R.id.layoutComment);
         btn_sendcoment = findViewById(R.id.btn_sendcoment);
         arrayComment = new ArrayList<>();
         commentAdapter = new CommentAdapter(arrayComment, getApplicationContext());
         lvComment.setAdapter(commentAdapter);
         commentAdapter.notifyDataSetChanged();
+    }
+
+    public void Views() {
+        layoutListView.setVisibility(View.INVISIBLE);
+        layoutComment.setVisibility(View.INVISIBLE);
     }
 
     private void Getdata() {

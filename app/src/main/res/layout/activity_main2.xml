@@ -16,9 +16,14 @@
         app:titleTextAppearance="@style/Toolbar.TitleText"
         app:titleTextColor="@color/white"></android.support.v7.widget.Toolbar>
 
-    <ListView
-        android:id="@+id/listBunPho"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ListView>
+
+        <ListView
+            android:id="@+id/listBunPho"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

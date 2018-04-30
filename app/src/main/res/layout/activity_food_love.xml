@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.tandung_pc.monngonduongpho.View.Detail_Screen_Food">
+    tools:context="com.example.tandung_pc.monngonduongpho.View.ActivityFoodLove">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarID"
@@ -25,7 +25,7 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="350dp">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,46 +107,6 @@
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
-
-        <LinearLayout
-            android:id="@+id/layoutListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:textColor="#000000"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Bình luận :"
-                android:textStyle="bold" />
-
-            <ListView
-                android:id="@+id/lvComment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ListView>
-        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edt_noidung1"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Viết bình luận" />
-
-        <ImageView
-            android:id="@+id/btn_sendcoment"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/iconsend" />
-    </LinearLayout>
 </LinearLayout>

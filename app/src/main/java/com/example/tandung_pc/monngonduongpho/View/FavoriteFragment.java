@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.view.ContextMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,13 +27,14 @@ import com.example.tandung_pc.monngonduongpho.SQLite.MyDatabaseHelper;
 import java.util.ArrayList;
 
 
-public class FavoriteFragment extends Fragment {
-    public static MyDatabaseHelper helper;
-    public static TextView txtThongBao;
+public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     ListView lvYeuThich;
     FoodListAdapter adapter;
-    ArrayList<Food> list;
+    ArrayList<Food> list = new ArrayList<>();
+    SwipeRefreshLayout swipe;
     Integer id;
+    private MyDatabaseHelper helper;
+    private TextView txtThongBao;
 
     @Override
     public void onAttach(Context context) {
@@ -44,15 +47,12 @@ public class FavoriteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         lvYeuThich = view.findViewById(R.id.lvYeuThich);
         txtThongBao = view.findViewById(R.id.txtThongBao);
-
-        list = new ArrayList<>();
+        swipe = view.findViewById(R.id.swipeRefreshLayout);
         helper = new MyDatabaseHelper(getActivity().getApplicationContext(), "Foodd.db", null, 1);
         adapter = new FoodListAdapter(getActivity(), R.layout.custom_listfood, list);
-
         Cursor cursor = helper.getData("SELECT * FROM FOOD");
         lvYeuThich.setAdapter(adapter);
-        list.clear();
-
+        adapter.notifyDataSetChanged();
         while (cursor.moveToNext()) {
             id = cursor.getInt(0);
             String name = cursor.getString(1);
@@ -63,20 +63,53 @@ public class FavoriteFragment extends Fragment {
             Integer typefoodId = cursor.getInt(6);
             list.add(new Food(id, name, address, image, description, price, typefoodId));
         }
+        Log.d("listt", String.valueOf(list.size()));
         adapter.notifyDataSetChanged();
         ThongBao();
         lvYeuThich.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), Detail_Screen_Food.class);
+                Intent intent = new Intent(getActivity(), ActivityFoodLove.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("list", list.get(i));
                 intent.putExtra("data", bundle);
                 getActivity().startActivity(intent);
             }
         });
-        registerForContextMenu(lvYeuThich);
+        lvYeuThich.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                helper = new MyDatabaseHelper(getActivity(), "Foodd.db", null, 1);
+                                helper.deleteData(id);
+                                lvYeuThich.invalidateViews();
+                                adapter.notifyDataSetChanged();
+                                Log.d("listt", String.valueOf(list.size()));
+                                Toast.makeText(getActivity(), "Xóa thành công !", Toast.LENGTH_SHORT).show();
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Log.d("listt", String.valueOf(list.size()));
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Bạn có chắc chắn muốn xóa?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+                return true;
+            }
+        });
+        // registerForContextMenu(lvYeuThich);
+        swipe.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.YELLOW, Color.RED);
+        swipe.setDistanceToTriggerSync(300);
+        swipe.setSize(SwipeRefreshLayout.DEFAULT);
+        swipe.setOnRefreshListener(this);
         return view;
     }
 
@@ -93,40 +126,21 @@ public class FavoriteFragment extends Fragment {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("LỰA CHỌN ");
-        menu.add(0, v.getId(), 0, "Xóa");
-    }
+    public void onRefresh() {
+        new CountDownTimer(3000, 1000) {
+            @Override
+            public void onTick(long l) {
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if (item.getTitle() == "Xóa") {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            helper = new MyDatabaseHelper(getActivity(), "Foodd.db", null, 1);
-                            helper.deleteData(id);
-                            Toast.makeText(getActivity(), "Xóa thành công !", Toast.LENGTH_SHORT).show();
-                            adapter.notifyDataSetChanged();
-                            break;
+            }
 
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                }
-            };
+            @Override
+            public void onFinish() {
+                swipe.setRefreshing(false);
+                adapter = new FoodListAdapter(getActivity(), R.layout.custom_listfood, list);
+                lvYeuThich.setAdapter(adapter);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Bạn có chắc chắn muốn xóa?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();
-            adapter.notifyDataSetChanged();
-        } else {
-            return false;
-        }
-        return true;
+            }
+        }.start();
     }
 }
 

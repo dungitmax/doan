@@ -17,8 +17,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
  */
 
 public class Fragment_Address extends Fragment implements OnMapReadyCallback {
-    private MapView mMapView;
     private static final String KEY_MAP_SAVED_STATE = "mapState";
+    private MapView mMapView;
 
     @Nullable
     @Override

@@ -3,7 +3,10 @@ package com.example.tandung_pc.monngonduongpho.View;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -30,9 +33,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BanhMiActivity extends AppCompatActivity {
-
-
+public class BanhMiActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout swipe;
     Toolbar toolbar;
     ListView lv;
     ArrayList<Food> mangfood;
@@ -53,10 +55,13 @@ public class BanhMiActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("list", mangfood.get(position));
                 intent.putExtra("data", bundle);
-
                 startActivity(intent);
             }
         });
+        swipe.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.YELLOW, Color.RED);
+        swipe.setDistanceToTriggerSync(300);
+        swipe.setSize(SwipeRefreshLayout.DEFAULT);
+        swipe.setOnRefreshListener(this);
 
     }
 
@@ -139,5 +144,24 @@ public class BanhMiActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarID);
         lv = findViewById(R.id.list);
         mangfood = new ArrayList<>();
+        swipe = findViewById(R.id.swipeRefreshLayout);
+    }
+
+    @Override
+    public void onRefresh() {
+        new CountDownTimer(3000, 1000) {
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                swipe.setRefreshing(false);
+                adapter = new FoodAdapter(getApplicationContext(), R.layout.custom_listfood, mangfood);
+                lv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        }.start();
     }
 }

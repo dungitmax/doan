@@ -1,28 +1,33 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.tandung_pc.monngonduongpho.View.FavoriteFragment">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <TextView
-        android:textColor="#ef1010"
-        android:id="@+id/txtThongBao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="DANH SÁCH RỖNG!"
-        android:textSize="30sp" />
-
-    <ListView
-        android:id="@+id/lvYeuThich"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </ListView>
-</FrameLayout>
+        <TextView
+            android:id="@+id/txtThongBao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Danh sách trống !"
+            android:textColor="#ef1010"
+            android:textSize="25sp" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lvYeuThich"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ListView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </FrameLayout>
 </FrameLayout>

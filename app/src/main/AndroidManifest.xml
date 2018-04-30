@@ -13,13 +13,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -64,6 +62,7 @@
             android:name=".View.Thongtinlienhe"
             android:label="@string/title_activity_thongtinlienhe" />
         <activity android:name=".View.Activity_Add_Next" />
+        <activity android:name=".View.ActivityFoodLove"></activity>
     </application>
 
 </manifest>
