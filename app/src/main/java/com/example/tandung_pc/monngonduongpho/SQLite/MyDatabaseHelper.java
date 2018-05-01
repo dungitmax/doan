@@ -23,7 +23,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void insertData(Integer id, String name, String adress, String image, String description, String price, Integer typefoodId) {
         SQLiteDatabase database = getWritableDatabase();
         String sql = "INSERT INTO FOOD VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
         statement.bindLong(1, id);
@@ -33,7 +32,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         statement.bindString(5, description);
         statement.bindString(6, price);
         statement.bindLong(7, typefoodId);
-
         statement.executeInsert();
     }
 
@@ -44,7 +42,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
         statement.bindDouble(1, (double) id);
-
         statement.execute();
         database.close();
     }
