@@ -202,27 +202,32 @@ public class Detail_Screen_Food extends AppCompatActivity {
             String description = txtMotafood.getText().toString();
             String price = txtGiafood.getText().toString();
             //
-            int size = FavoriteFragment.listAll.size();
-            Log.d("sizee", String.valueOf(size));
-            for (int i = 0; i < size; i++) {
-                namee = FavoriteFragment.listAll.get(i);
-                Log.d("sizee", namee);
-                if (name.equals(namee)) {
-                    checkSame = true;
-                    Toast.makeText(this, "Món ăn đã được yêu thích!", Toast.LENGTH_SHORT).show();
+            try {
+                int size = FavoriteFragment.listAll.size();
+                Log.d("sizee", String.valueOf(size));
+                for (int i = 0; i < size; i++) {
+                    namee = FavoriteFragment.listAll.get(i);
+                    Log.d("sizee", namee);
+                    if (name.equals(namee)) {
+                        checkSame = true;
+                        Toast.makeText(this, "Món ăn đã được yêu thích!", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-            if (checkSame == false) {
-                if (name != null && item.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.favorite).getConstantState())) {
-                    helper.insertData(food.getFoodId(), name, address, food.getImage(), description, price, food.getTypefoodId());
-                    item.setIcon(R.drawable.favorite_1);
-                    Toast.makeText(getApplicationContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
-                } else {
-                    helper.deleteData(food.getFoodId());
-                    item.setIcon(R.drawable.favorite);
-                    Toast.makeText(getApplicationContext(), "Xóa thành công!", Toast.LENGTH_SHORT).show();
+                if (checkSame == false) {
+                    if (name != null && item.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.favorite).getConstantState())) {
+                        helper.insertData(food.getFoodId(), name, address, food.getImage(), description, price, food.getTypefoodId());
+                        item.setIcon(R.drawable.favorite_1);
+                        Toast.makeText(getApplicationContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        helper.deleteData(food.getFoodId());
+                        item.setIcon(R.drawable.favorite);
+                        Toast.makeText(getApplicationContext(), "Xóa thành công!", Toast.LENGTH_SHORT).show();
+                    }
                 }
+            } catch (Exception ex) {
+                Toast.makeText(this, "Món ăn đã được yêu thích!", Toast.LENGTH_SHORT).show();
             }
+
 
         }
         return super.onOptionsItemSelected(item);

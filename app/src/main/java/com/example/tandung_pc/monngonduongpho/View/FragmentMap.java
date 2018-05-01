@@ -72,8 +72,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
     private static final String KEY_MAP_SAVED_STATE = "mapState";
     private static final String TAG = "FragmentMap";
     private static final CharSequence[] MAP_TYPE_ITEMS =
-            {"Road Map", "Hybrid", "Satellite", "Terrain"};
-    private static final float DEFAULT_ZOOM = 15f;
+            {"Thông thường", "Hỗn hợp", "Vệ tinh", "Địa hình"};
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
     MapView mMapView;
     GoogleMap googleMap;

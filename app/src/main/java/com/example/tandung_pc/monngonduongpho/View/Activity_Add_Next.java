@@ -120,6 +120,7 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
         if (name.equals("") || address.equals("") || price.equals("") || temp.equals("")
                 || information.equals("")) {
             Toast.makeText(Activity_Add_Next.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         } else {
             //getting the actual path of the image
             String path = getPath(filePath);
@@ -256,10 +257,17 @@ public class Activity_Add_Next extends AppCompatActivity implements View.OnClick
                 showFileChooser();
                 break;
             case R.id.btnThem:
-                if (checkClick) {
-                    uploadMultipart();
+                try {
+                    if (checkClick) {
+                        uploadMultipart();
+                    } else {
+                        Toast.makeText(this, "Bạn chưa chọn ảnh !", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    Toast.makeText(this, "Bạn chưa chọn ảnh !", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
-                Toast.makeText(this, "Bạn chưa chọn ảnh !", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.btnThoat:
                 Intent intent = new Intent(this, MainActivity.class);
