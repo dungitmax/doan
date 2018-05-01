@@ -65,20 +65,20 @@ public class FragmentDangKi extends Fragment implements View.OnFocusChangeListen
                 final String passWord = edtPassword.getText().toString();
                 final String passwordNew = edtPasswordNew.getText().toString();
                 final String address = edtAddress.getText().toString();
-                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.DuongdanRegister, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        JSONObject object = null;
-                        if (name.equals("") || userName.equals("") || passWord.equals("")) {
-                            Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin !", Toast.LENGTH_SHORT).show();
-                        } else if (passWord.length() < 6) {
-                            Toast.makeText(getContext(), "Mật khẩu phải ít nhất 6 kí tự", Toast.LENGTH_SHORT).show();
-                        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(userName).matches() && !Patterns.PHONE.matcher(userName).matches() || userName.length() < 10) {
-                            Toast.makeText(getContext(), "Tài khoản không hợp lệ !", Toast.LENGTH_SHORT).show();
-                        } else if (!passwordNew.equals(passWord)) {
-                            Toast.makeText(getContext(), "Nhập lại sai mật khẩu!", Toast.LENGTH_SHORT).show();
-                        } else {
+                if (name.equals("") || userName.equals("") || passWord.equals("")) {
+                    Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin !", Toast.LENGTH_SHORT).show();
+                } else if (passWord.length() < 6) {
+                    Toast.makeText(getContext(), "Mật khẩu phải ít nhất 6 kí tự", Toast.LENGTH_SHORT).show();
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(userName).matches() && !Patterns.PHONE.matcher(userName).matches() || userName.length() < 10) {
+                    Toast.makeText(getContext(), "Tài khoản không hợp lệ !", Toast.LENGTH_SHORT).show();
+                } else if (!passwordNew.equals(passWord)) {
+                    Toast.makeText(getContext(), "Nhập lại sai mật khẩu!", Toast.LENGTH_SHORT).show();
+                } else {
+                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.DuongdanRegister, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            JSONObject object = null;
                             try {
                                 object = new JSONObject(response);
                                 boolean success = object.getBoolean("success");
@@ -93,24 +93,26 @@ public class FragmentDangKi extends Fragment implements View.OnFocusChangeListen
                                 e.printStackTrace();
                             }
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
-                        hashMap.put("name_User", name);
-                        hashMap.put("username", userName);
-                        hashMap.put("password_User", passWord);
-                        hashMap.put("address", address);
-                        return hashMap;
-                    }
-                };
-                requestQueue.add(stringRequest);
+
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String, String> hashMap = new HashMap<String, String>();
+                            hashMap.put("name_User", name);
+                            hashMap.put("username", userName);
+                            hashMap.put("password_User", passWord);
+                            hashMap.put("address", address);
+                            return hashMap;
+                        }
+                    };
+                    requestQueue.add(stringRequest);
+                }
+
             }
         });
         return view;

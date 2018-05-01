@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
             "Bún,Phở",
             "Món chè",
             "Nước uống",
-            "Đồ chiên,nướng",
+            "Đồ chiên,Nướng",
             "Bánh mì",
             "Các món khác"
     };

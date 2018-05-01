@@ -70,6 +70,7 @@ public class FragmentThongTinTaiKhoan extends android.support.v4.app.Fragment {
         if (loginface) {
             txtTen.setText(preferences1.getString("username", ""));
             txtUsername.setText(preferences1.getString("email", ""));
+            txtDiachi.setText("N/A");
         }
 
         return view;

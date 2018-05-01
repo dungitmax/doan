@@ -1,5 +1,6 @@
 package com.example.tandung_pc.monngonduongpho.View;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -51,14 +52,18 @@ public class Detail_Screen_Food extends AppCompatActivity {
     String Hinhanhchitiet = "";
     String Diadiem = "";
     String Motachitiet = "";
+    SharedPreferences preferences;
     LinearLayout layoutListView, layoutComment;
     int IdTypeFood = 0;
     int maFood;
     int id;
     String name = "";
+    String namee = "";
     ArrayList<ModelComment> arrayComment;
+    ArrayList<String> listNameFood;
     CommentAdapter commentAdapter;
     EditText edtNoidung;
+    private TextView txtThongBao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,19 +101,10 @@ public class Detail_Screen_Food extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Bình luận thành công !", Toast.LENGTH_SHORT).show();
                         }
                     };
-//                    SharedPreferences preferences = getSharedPreferences("getuserid", MODE_PRIVATE);
-//                    SharedPreferences preferences1 = getSharedPreferences("dangnhap", MODE_PRIVATE);
-//                    String name = preferences1.getString("username", "");
-//                    String id_user = preferences.getString("user_id", "");
-//                    Log.d("eee", id_user);
-//                    if (MainActivity.getten.equals("ltandungit@gmail.com")) {
-//                        CommentRequest request = new CommentRequest(9, maFood, "Lê Tấn Dũng", noidung, listener);
-//                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-//                        queue.add(request);
-//                    } else {
-                    //GetUser();
-                    Log.d("idd", String.valueOf(id));
-                    CommentRequest request = new CommentRequest(id, maFood, MainActivity.getten, noidung, listener);
+                    preferences = getSharedPreferences("dangnhap", MODE_PRIVATE);
+                    int idUser = preferences.getInt("iduser", 100);
+                    Log.d("idd", String.valueOf(idUser));
+                    CommentRequest request = new CommentRequest(idUser, maFood, MainActivity.getten, noidung, listener);
                     RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                     queue.add(request);
 //                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -203,14 +199,23 @@ public class Detail_Screen_Food extends AppCompatActivity {
             String address = txtDiadiem.getText().toString();
             String description = txtMotafood.getText().toString();
             String price = txtGiafood.getText().toString();
-            if (name != null && item.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.favorite).getConstantState())) {
-                helper.insertData(food.getFoodId(), name, address, food.getImage(), description, price, food.getTypefoodId());
-                item.setIcon(R.drawable.favorite_1);
-                Toast.makeText(getApplicationContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
+            //
+            int size = FavoriteFragment.listAll.size();
+            for (int i = 0; i < size; i++) {
+                namee = FavoriteFragment.listAll.get(i);
+            }
+            if (name.equals(namee)) {
+                Toast.makeText(this, "Món ăn đã được yêu thích!", Toast.LENGTH_SHORT).show();
             } else {
-                helper.deleteData(food.getFoodId());
-                item.setIcon(R.drawable.favorite);
-                Toast.makeText(getApplicationContext(), "Xóa thành công!", Toast.LENGTH_SHORT).show();
+                if (name != null && item.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.favorite).getConstantState())) {
+                    helper.insertData(food.getFoodId(), name, address, food.getImage(), description, price, food.getTypefoodId());
+                    item.setIcon(R.drawable.favorite_1);
+                    Toast.makeText(getApplicationContext(), "Thêm thành công!", Toast.LENGTH_SHORT).show();
+                } else {
+                    helper.deleteData(food.getFoodId());
+                    item.setIcon(R.drawable.favorite);
+                    Toast.makeText(getApplicationContext(), "Xóa thành công!", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         return super.onOptionsItemSelected(item);
@@ -240,15 +245,11 @@ public class Detail_Screen_Food extends AppCompatActivity {
         layoutListView = findViewById(R.id.layoutListView);
         layoutComment = findViewById(R.id.layoutComment);
         btn_sendcoment = findViewById(R.id.btn_sendcoment);
+        txtThongBao = findViewById(R.id.txtThongBao);
         arrayComment = new ArrayList<>();
         commentAdapter = new CommentAdapter(arrayComment, getApplicationContext());
         lvComment.setAdapter(commentAdapter);
         commentAdapter.notifyDataSetChanged();
-    }
-
-    public void Views() {
-        layoutListView.setVisibility(View.INVISIBLE);
-        layoutComment.setVisibility(View.INVISIBLE);
     }
 
     private void Getdata() {
@@ -268,15 +269,12 @@ public class Detail_Screen_Food extends AppCompatActivity {
                             username1 = jsonObject.getString("username");
                             noidung1 = jsonObject.getString("text_comment");
                             arrayComment.add(new ModelComment(username1, noidung1));
+                            ThongBao();
                             commentAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                } else {
-//                    limitdata = true;
-//                    lvComment.removeFooterView(footerview);
-//                    Toast.makeText(Detail_Screen_Food.this, "ddsdd", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -293,5 +291,17 @@ public class Detail_Screen_Food extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
+    }
+
+    private void ThongBao() {
+        if (arrayComment.size() <= 0) {
+            txtThongBao.setVisibility(View.VISIBLE);
+            lvComment.setVisibility(View.INVISIBLE);
+            commentAdapter.notifyDataSetChanged();
+        } else {
+            txtThongBao.setVisibility(View.INVISIBLE);
+            lvComment.setVisibility(View.VISIBLE);
+            commentAdapter.notifyDataSetChanged();
+        }
     }
 }

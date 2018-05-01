@@ -25,14 +25,18 @@ import com.example.tandung_pc.monngonduongpho.R;
 import com.example.tandung_pc.monngonduongpho.SQLite.MyDatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 
 public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    public static ArrayList<String> listAll = new ArrayList<>();
     ListView lvYeuThich;
     FoodListAdapter adapter;
     ArrayList<Food> list = new ArrayList<>();
     SwipeRefreshLayout swipe;
     Integer id;
+    ArrayList<String> listName = new ArrayList<>();
     private MyDatabaseHelper helper;
     private TextView txtThongBao;
 
@@ -63,7 +67,7 @@ public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnR
             Integer typefoodId = cursor.getInt(6);
             list.add(new Food(id, name, address, image, description, price, typefoodId));
         }
-        Log.d("listt", String.valueOf(list.size()));
+        listAll = getListName();
         adapter.notifyDataSetChanged();
         ThongBao();
         lvYeuThich.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,23 +81,35 @@ public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnR
                 getActivity().startActivity(intent);
             }
         });
+
         lvYeuThich.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HashMap<Integer, Integer> hashMap = new HashMap<>();
+                hashMap.put(i, list.get(i).getFoodId());
+                Iterator myVeryOwnIterator = hashMap.keySet().iterator();
+                int value = 0;
+                while (myVeryOwnIterator.hasNext()) {
+                    int key = (int) myVeryOwnIterator.next();
+                    value = hashMap.get(key);
+                }
+
+                final int finalValue = value;
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
+
                                 helper = new MyDatabaseHelper(getActivity(), "Foodd.db", null, 1);
-                                helper.deleteData(id);
+                                helper.deleteData(finalValue);
+                                Log.d("iddd", String.valueOf(finalValue));
                                 lvYeuThich.invalidateViews();
                                 adapter.notifyDataSetChanged();
-                                Log.d("listt", String.valueOf(list.size()));
                                 Toast.makeText(getActivity(), "Xóa thành công !", Toast.LENGTH_SHORT).show();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
-                                Log.d("listt", String.valueOf(list.size()));
                                 break;
                         }
                     }
@@ -127,7 +143,7 @@ public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer(2000, 1000) {
             @Override
             public void onTick(long l) {
 
@@ -141,6 +157,14 @@ public class FavoriteFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             }
         }.start();
+    }
+
+    public ArrayList<String> getListName() {
+        for (int i = 0; i < list.size(); i++) {
+            listName.add(list.get(i).getNameFood());
+            Log.d("listt", String.valueOf(list.get(i).getNameFood()));
+        }
+        return listName;
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.tandung_pc.monngonduongpho.View;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
@@ -122,7 +124,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
     private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            hideSoftKeyboard();
+            hideSoftKeyboardd(getActivity());
             final AutocompletePrediction item = mAdapter.getItem(i);
             final String placeId = item.getPlaceId();
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
@@ -130,6 +132,14 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
             sendRequest();
         }
     };
+
+    public static void hideSoftKeyboardd(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -249,7 +259,6 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                     .title(title);
             googleMap.addMarker(options);
         }
-        hideSoftKeyboard();
     }
 
     private void init() {
@@ -307,7 +316,7 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                 }
             }
         });
-        hideSoftKeyboard();
+
     }
 
     private void sendRequest() {
@@ -402,10 +411,6 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
     @Override
     public void onMyLocationClick(@NonNull Location location) {
 
-    }
-
-    private void hideSoftKeyboard() {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void showMapTypeSelectorDialog() {
