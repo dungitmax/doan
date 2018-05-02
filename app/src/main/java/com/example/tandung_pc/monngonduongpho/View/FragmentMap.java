@@ -191,7 +191,8 @@ public class FragmentMap extends Fragment implements GoogleMap.OnMyLocationButto
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
-
+                googleMap.getUiSettings().setZoomControlsEnabled(true);
+                googleMap.getUiSettings().setZoomGesturesEnabled(true);
                 // googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 // For dropping a marker at a point on the Map
 
