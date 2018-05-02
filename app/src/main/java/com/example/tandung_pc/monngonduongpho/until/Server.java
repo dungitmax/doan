@@ -10,7 +10,7 @@ public class Server {
     //public static String localhost = "http://192.168.1.104/";//home
     // public static String localhost = "http://10.17.6.184/";//home
     //public static String localhost = "http://10.17.6.106/";//other
-    public static String localhost = "http://192.168.1.3/";//cuong's house
+    public static String localhost = "http://172.27.3.49/";//cuong's house
     public static String DuongdanBunPho = localhost + "server_appmonanduongpho/getfoodbunpho.php";
     public static String DuongdanMonChe = localhost + "server_appmonanduongpho/getfoodmonche.php";
     public static String DuongdanNuocUong = localhost + "server_appmonanduongpho/getfoodnuocuong.php";
